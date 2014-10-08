@@ -1,0 +1,166 @@
+Part 6: if - else
+
+***********************************************
+Introduction to the if - else control structure and reading user input from the keyboard. Illustrated by a simple number guessing game.
+***********************************************
+
+Hello and welcome to part 6 of the C++ beginner tutorial. In this session we are going to learn about the if - else control structure. This structure allows you to guide the execution of your program depending on conditions you set. We are going to create a simple number guessing game. To give you an idea of a condition, the most basic one is if the player has guessed the correct number or not. In case she has, you would like to display a message that she has won and otherwise have her guess again.
+
+To start out, a quick overview of what the program does. First, we create a random number to be guessed by the player. Then, we ask the player to guess the number a set number of times. After each guess, we inform her if the number she guessed is above or below the correct one. If she guesses the right number, we display a message and the application ends. Same thing if she does not guess it after she ran out of tries.
+
+OK, so let's get started with the initialization part.
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+int main() {
+	// our contstants
+	const int MAX_NUMBER = 100;
+	const int MAX_GUESSES = 10;
+	const int CHARACTERS_TO_CLEAR = 1024;
+	
+	// create a random number between 1 and MAX_NUMBER to be guessed
+	srand(time(0));
+	int number = rand() % MAX_NUMBER + 1;
+	
+	// the range the number is in. This moves with the user's guesses
+	int min_to_guess = 1;
+	int max_to_guess = MAX_NUMBER;
+	
+The new includes are cstdlib and ctime. The first contains the random number functions, the second contains functions for manipulating time structures. We then set a number of constants. MAX_NUMBER is the maximum random number to generate. We will therefore have the player guess a number between 1 and MAX_NUMBER. MAX_GUESSES is the number of times she can guess before losing. CHARACTERS_TO_CLEAR is how many characters to clear from the input and will be explained later on.
+We then create our random number. First, we initialize our random number generator. The random numbers produced by C++ are not truly random, but pseudo-random. This means that they are predictible. The way it works is: We take a starting number and the next number generated will be calculated based on the previous one. So we get a sequence of "random" numbers, e.g. 30, 4214, 231, 32523, 1, 324, ... . If we initialize it in the same way, we will always get the same sequence of random numbers. This can be useful for testing, as experiments can be repeated under the same conditions. Normally, however, we do not want this behavior. So, what we need to do is initialize it with another "random" number. This is typically done with the time() function. time(0) means: Take the current time. srand() initializes our random sequence (it sets what is called the seed of the sequence).
+The next step is to calculate our number. We do this with the rand() function. rand() always returns a number between 0 (inclusive) and a constant named MAX_RAND (exclusive). To get a number between 0 and MAX_NUMBER, we use the % (modulo) operator. This operator takes the remainder of an integer division. e.g. 10 / 3 is 3 remainder 1 (3 * 3 + 1), 21 / 6 is 3 remainder 3 (6 * 3 + 3). The remainder of a division will always be between 0 (inclusive) and the divisor (exclusive), in our case MAX_NUMBER. But we want the number to be between 1 (inclusive) and MAX_NUMBER (inclusive), so we add 1.
+The next 2 variables set the upper and lower bound of the number to guess.
+
+Next, copy and paste this code:
+
+for (int guesses_left = MAX_GUESSES; guesses_left > 0; guesses_left--) {
+	// the number the user guesses
+	int guess;
+	
+	// read the user's guess from keyboard
+	std::cout << "Guess a number between " << min_to_guess << " and " << max_to_guess << ". You have " << guesses_left << " guesses left: " << std::endl;
+	std::cin >> guess; 
+
+Here we start our guessing loop, which allows the player to guess MAX_GUESSES times. We then prompt the player to guess a number and display information about the upper and lower bounds, as well as how many guesses she has left.
+The new part comes with the std::cin line. The stream std:cin is the stream that reads from the keyboard. We read into the variable guess. Notice that the operator >> points in the opposite direction of that of cout, to indicate the direction of the information flow.
+
+Now, our first contact with "if":
+
+// make sure it is a valid integer
+if (std::cin.fail()) {
+	std::cout << "Only integers are allowed. Now you loose a try" << std::endl;
+}
+
+This part checks if the player's input is correct. Since we read into an integer, anything that is not an integer, like a string or a decimal, will cause cin.fail() to return true. Note that if the first part of what we typed can be read, this will not cause cin to fail. Let's say you type 70abc. It will read 70 into our variable guess, but 'abc' will still be in the stream. If we tried to read something from the stream now, it would immediately return 'abc', instead of prompting the user for input first. In order to avoid this, we will clear the stream later on.
+
+// compare the number
+else {
+	if (guess < number) {
+		std::cout << "The number is bigger than that" << std::endl;
+		// adjust min
+		if (guess > min_to_guess) {
+			min_to_guess = guess;
+		}
+	}
+	else if (guess > number) {
+		std::cout << "The number is smaller than that" << std::endl;
+		// adjust max
+		if (guess < max_to_guess) {
+			max_to_guess = guess;
+		}
+	}
+	// the player wins and we exit the application
+	else {
+		std::cout << "Congratulations, you got it!" << std::endl;
+		return 0;
+	}
+}
+
+OK, so if our input is correct, the if block will not be executed. Instead, we want to process our input, to see if the player guessed the correct number. For this, we have the else keyword after the if. The code in the else block will only be executed if the if condition is not true.
+In the first part of the else block, we check if the number we guessed is smaller than the secret number. If so, we also check if our guess is bigger than the smallest guess so far. This adjusts the boundaries to help the player. As you can see here, this second if has no else. It is not mandatory to have an else block. If the condition is true, the if block is executed, otherwise, do nothing.
+In the next else block, we do the same to see if the number we guessed is bigger than the secret number. As you can see here, the else is followed by another if. This way you can create 'multiple choice' structures.
+Finally, if the number is neither bigger nor smaller, then it is the same. The return exits our main() function with 0 (= execution was correct), which ends the program. A return statement does two things. First, it ends the function it belongs to (this allows exiting a function before its last line), second it sets the value of the function.
+
+Now, for the final part:
+
+		// clear the input
+		std::cin.clear();
+		std::cin.ignore(CHARACTERS_TO_CLEAR, '\n');
+	}
+	
+	// all guesses have been used, so we loose
+	std::cout << "Sorry, you lost. Better luck next time" << std::endl;
+	
+	return 0;
+}
+
+As mentioned before, we are going to clear the input stream, to make sure it has no characters left that interfere with our input. First, we reset all error flags. This is done with cin.clear(). Then, we flush out the characters left in the stream. cin.ignore() will delete the amount of characters defined in the first parameter (CHARACTERS_TO_CLEAR) or until it reaches the character defined in the second parameter ('\n'), whichever comes first. '\n' is the new line character (i.e. the enter key). Please note that this way of clearing the stream is not safe enough for a real application, but for our purposes it suffices.
+If we reach the end of the for loop, that means the player did not guess the number in the amount of tries given, and thus lost.
+
+And that's it. Hope you enjoyed it and see you in the next session. Please find below the complete code for reference.
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+int main() {
+	// our contstants
+	const int MAX_NUMBER = 100;
+	const int MAX_GUESSES = 10;
+	const int CHARACTERS_TO_CLEAR = 1024;
+	
+	// create a random number between 1 and MAX_NUMBER to be guessed
+	srand(time(0));
+	int number = rand() % MAX_NUMBER + 1;
+	
+	// the range the number is in. This moves with the user's guesses
+	int min_to_guess = 1;
+	int max_to_guess = MAX_NUMBER;
+	
+	for (int guesses_left = MAX_GUESSES; guesses_left > 0; guesses_left--) {
+		// the number the user guesses
+		int guess;
+		
+		// read the user's guess from keyboard
+		std::cout << "Guess a number between " << min_to_guess << " and " << max_to_guess << ". You have " << guesses_left << " guesses left: " << std::endl;
+		std::cin >> guess; 
+		
+		// make sure it is a valid integer
+		if (std::cin.fail()) {
+			std::cout << "Only integers are allowed. Now you loose a try" << std::endl;
+		}
+		// compare the number
+		else {
+			if (guess < number) {
+				std::cout << "The number is bigger than that" << std::endl;
+				// adjust min
+				if (guess > min_to_guess) {
+					min_to_guess = guess;
+				}
+			}
+			else if (guess > number) {
+				std::cout << "The number is smaller than that" << std::endl;
+				// adjust max
+				if (guess < max_to_guess) {
+					max_to_guess = guess;
+				}
+			}
+			// the player wins and we exit the application
+			else {
+				std::cout << "Congratulations, you got it!" << std::endl;
+				return 0;
+			}
+		}
+		
+		// clear the input
+		std::cin.clear();
+		std::cin.ignore(CHARACTERS_TO_CLEAR, '\n');
+	}
+	
+	// all guesses have been used, so we loose
+	std::cout << "Sorry, you lost. Better luck next time" << std::endl;
+	
+	return 0;
+}

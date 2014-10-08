@@ -1,0 +1,29 @@
+# Project: StringsAndInts
+# Makefile created by Dev-C++ 5.3.0.1
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = strings_and_ints.o $(RES)
+LINKOBJ  = strings_and_ints.o $(RES)
+LIBS     =
+INCS     = -I"C:/Dev/SW/Frameworks/SDL-devel-1.2.15-mingw32/SDL-1.2.15/include"
+CXXINCS  =
+BIN      = StringsAndInts.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before StringsAndInts.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "StringsAndInts.exe" $(LIBS)
+
+strings_and_ints.o: strings_and_ints.cpp
+	$(CPP) -c strings_and_ints.cpp -o strings_and_ints.o $(CXXFLAGS)

@@ -1,0 +1,139 @@
+Part 5: For loops
+
+------------------------------------------------------------------------------------------------------------------------
+
+This tutorial introduces the for loop control structure and also gives examples of constants.
+
+------------------------------------------------------------------------------------------------------------------------
+
+Hello and welcome to part 5 of this C++ tutorial. For those new to it, let me explain that every tutorial assumes you have done the previous ones, so if there is something that is not described here, check out the other parts first. Since now you have already seen some of the basic aspects of C++, the format of the tutorials will change a little bit. We will start doing more practical programs, instead of explaining a single aspect in detail - that's what reference guides are for. I hope this makes the process more fun and natural, as we see functional applications instead of just memorizing theory.
+Even though we are still a bit away, in this part we will draw a Christmas tree. Its shape makes it a very good candidate for the concepts I am going to explain and there is also some nostalgia involved - this is the program that taught me for loops.
+
+OK, so let's start by creating a new file, e.g. xmas_tree.cpp.
+
+The file starts with
+
+#include <iostream>
+
+int main() {
+You should be familiar with this by now. There is one thing to notice, though. I have left out the using namespace std line. For the first tutorials, where we relied heavily on cout, it improved readability. But using namespaces is actually something to be avoided. Namespaces are there for a purpose, and that is separating names so that they do not collide (i.e. that two different identifiers have the same name). When using a namespace, you import everything into your own namespace, thus polluting it, increasing the risk of collision and limiting your name choice - you will not be able to name any of your identifiers with a name that exists in the namespace you are using. So use it sparingly.
+
+
+Now copy this portion of code into your main function:
+
+// maximum amount of needle lines (the triangular part of the tree)
+const int MAX_LINES = 10;
+// stem size
+const int STEM_HEIGHT = 3;
+const int STEM_WIDTH = 5;
+// characters to draw the tree
+const char NEEDLE_CHAR = '*';
+const char STEM_CHAR = 'X';
+const char SPACE_CHAR = ' ';
+Here we are defining constant values. Using the const keyword in front of a variable declaration makes it constant. That means that you cannot change its value. A consequence of this is that you have to assign it a value when you declare it. The names are all in capital letters. This is not mandatory, but it is a common convention, not only in C++. This way they are easy to distinguish.
+
+
+Next, insert this code:
+
+// draw the needles
+for (int i = 0; i < MAX_LINES; i++) {
+	int treechars = 2 * i + 1;
+	int spaces = MAX_LINES - i - 1;
+
+	// draw the spaces in front of each line
+	for (int j = 0; j < spaces; j++) {
+		std::cout << SPACE_CHAR;
+	}
+
+	// draw the tree line
+	for (int j = 0; j < treechars; j++) {
+		std::cout << NEEDLE_CHAR;
+	}
+
+	std::cout << std::endl;
+}
+This is the core of this tutorial: The for loop. The for loop allows you to repeat a section of code a predefined number of times. It has the syntax
+
+for (<initialization>; <ending condition>; <increment>) <block to execute>
+
+Today, I will teach you the basic pattern. There are others, but this is 90% of how for loops are used and it allows keeping things simple. It should be better than confusing you with something that you are not going to use anyway.
+Basically, you execute the loop x times, defined by a range from a value 1 to a value 2. You also have a counter variable, which changes its value in every iteration of the loop. This should become clear with a few examples. You could go through the loop from 1 to 5 (you repeat it 5 times). Your counter will then have the values 1, 2, 3, 4 and 5. Or, you could go from 0 to 6, in increments of 2. You would then get 0, 2, 4 and 6 for your counter.
+Let's apply this to the for syntax. In <initialization> we declare our counter variable and our starting value. In <ending condition> we declare our end value. And finally, in <increment> we update our counter.
+In the code above, we are drawing the needles (i.e. the triangular part of the tree) one line at a time. We declare our counter i and give it a starting value of 0. The end value is going to be MAX_LINES - 1. Why the - 1? Because there is a < sign. Once i reaches MAX_LINES, MAX_LINES < MAX_LINES will not be true anymore, so the loop ends. So why not use <= (less or equal)? This is because we start our loop with 0. If we executed our loop when i = MAX_LINES, we would actually have executed it MAX_LINES + 1 times. Finally, in the <increment>, we tell the counter to be incremented by 1. i++ is a short form for saying i = i + 1. If we wanted increments of 2, we would put i = i + 2 (there is no short form for this) as <increment>.
+It is also possible to have a backward loop, i.e. a loop going from a higher value, to a lower one, e.g. from 10 to 1. In this case we would initialize with the higher value (i.e. 10), our <ending condition> would be i >= 1 (i greater or equal to 1) and our <increment> i-- (which, as you might have guessed, is a short form for i = i - 1). So for (int i = 10; i >= 1; i--), or the equivalent for (int i = 10; i > 0; i--).
+In <block to execute> we put the code that we want to execute several times. By default, only the first line after the for will be executed. Since this is commonly not what we want, we put our code between { and }. This marks the beginning and end of a block. We have already seen this in our main() function, which also starts and ends with {}. One of the important properties of a block is that variables declared inside it are only visible inside it. A variable declared inside a block cannot be used outside that block.
+We have an example for this in the two for (int j...) lines. As you can see, the variable has to be declared again in the second for. A note for Visual Studio users: Microsoft does not respect the ANSI conventions for this case. The j variable will be visible outside of the for block, so it does not have to be redeclared in the second for. Thus, in VS, the line will read: for (j = 0; j < treechars; j++) {.
+Now have a look at this line:
+int treechars = 2 * i + 1;
+Here we can see the usage of the counter variable i. As said before, in each iteration it will increase its value by 1. So treechars (which is the amount of characters representing the needles) will be 2 * 0 + 1 in the first iteration, 2 * 1 + 1 in the second, 2 * 2 + 1 in the third and so on. This will draw a nice triangle.
+
+
+Next, copy this portion of code inside your main function.
+
+// draw the stem
+int spaces = MAX_LINES - STEM_WIDTH/2 - 1 ;
+for (int i = 0; i < STEM_HEIGHT; i++) {
+	// draw the spaces in front of the stem
+	for (int j = 0; j < spaces; j++) {
+		std::cout << SPACE_CHAR;
+	}
+
+	// draw the stem itself
+	for (int j = 0; j < STEM_WIDTH; j++) {
+		std::cout << STEM_CHAR;
+	}
+
+	std::cout << std::endl;
+}
+As the comment indicates, this draws the stem. Again, we draw it one line at a time. See how the spaces variable is redeclared, because it is not visible outside the previous block? It is, however, visible inside the new for (int i...) block. This is because the parent block (in this case our main() function) is visible inside the child block (the for (int i...)), but not the other way around.
+
+
+OK, if you haven't done so yet, close the main() with a }, compile and run. Below is the complete code for reference and see you in the next lesson. Until then, happy coding!
+
+#include <iostream>
+
+int main() {
+	// maximum amount of needle lines (the triangular part of the tree)
+	const int MAX_LINES = 10;
+	// stem size
+	const int STEM_HEIGHT = 3;
+	const int STEM_WIDTH = 5;
+	// characters to draw the tree
+	const char NEEDLE_CHAR = '*';
+	const char STEM_CHAR = 'X';
+	const char SPACE_CHAR = ' ';
+	
+	// draw the needles
+	for (int i = 0; i < MAX_LINES; i++) {
+		int treechars = 2 * i + 1;
+		int spaces = MAX_LINES - i - 1;
+		
+		// draw the spaces in front of each line
+		for (int j = 0; j < spaces; j++) {
+			std::cout << SPACE_CHAR;
+		}
+		
+		// draw the tree line
+		for (int j = 0; j < treechars; j++) {
+			std::cout << NEEDLE_CHAR;
+		}
+		
+		std::cout << std::endl;
+	}
+	
+	// draw the stem
+	int spaces = MAX_LINES - STEM_WIDTH/2 - 1 ;
+	for (int i = 0; i < STEM_HEIGHT; i++) {
+		// draw the spaces in front of the stem
+		for (int j = 0; j < spaces; j++) {
+			std::cout << SPACE_CHAR;
+		}
+		
+		// draw the stem itself
+		for (int j = 0; j < STEM_WIDTH; j++) {
+			std::cout << STEM_CHAR;
+		}
+		
+		std::cout << std::endl;
+	}
+}

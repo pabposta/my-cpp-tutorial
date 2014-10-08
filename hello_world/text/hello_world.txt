@@ -1,0 +1,56 @@
+Hello all!
+
+I was asked to do a beginner tutorial on C++. So here it is, my first tutorial ever. In order to be able to publish more often, and also to create some kind of structure, I will split it into several parts. So if someone wants a tutorial on a specific feature, I can try to fit it in. And btw, feedback is always very welcome. So let's get started with Part 1: Hello World!
+
+Hello World is one of the most famous programs and usually the starting point when you learn a new language. This is the code:
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	cout << "Hello world!" << endl;
+	
+	return 0;
+}
+
+Copy it into a file and name it hello_world.cpp.
+
+Now, let's see what each part does:
+
+#include <iostream>
+
+tells your compiler to include the library iostream. As its name implies, it is used for input and output. In our case, we need to use the special stream cout, which is the console output stream and is defined in this library.
+Lines starting with # are preprocessor directives. They are executed before the code is compiled and give instructions on how to compile. As a beginner, you will rarely (if ever) face them in your programs, with the exception of #include.
+
+using namespace std;
+
+tells the compiler to look in the namespace std for our identifiers. Namespaces are used to avoid that two identifiers with the same name have a conflict. E.g., we might have two identifiers called address. One is used for an internet address, the other for a physical address (like a house). If you want to use them together, e.g. to describe a company, the compiler would not know to which you are referring. However, if you define one in the namespace internet and the other in the namespace physical, you would be able to differentiate them by using their fully qualified names: internet::address and physical::address. The :: is the operator used to link the namespace to the identifier.
+One thing to have in mind is that once you declare an identifier inside a namespace, you always have to use the qualified name. But when you are sure that there will be no conflict, you might find that using the namespace prefix is unnecessary. This is what the using namespace directive is for. It will look inside the namespace being used to find identifiers declared inside it. In our case, this would be the stream cout. Usually, you would have to type std::cout, but now just cout is OK. std is the namespace used by C++'s standard libraries. Therefore, you will find the using namespace std; quite often.
+
+Another thing to see here is that lines end with a ;. Just a line break will not indicate the end of an instruction. So using namespace std, without the ; will generate an error. Likewise, the ; could be a few lines below (as long as there is nothing else between the std and the ;). This also allows having multiple instructions on a single line (although this is not recommended).
+
+int main() {
+
+is a function declaration. A function in C++ is very similar to a function in mathematics. It can calculate a value for you, like for example sin(x). It can also be used as a procedure, which means that it executes a sequence of commands, but returns no value. This can serve two purposes: The first is to organize your code better, the second is to make it easily accessible. In order to execute the whole series of commands, only one line is needed: The function's name. We have declared our function to be of type int. This means that the function returns an integer value.
+Unlike sin(x), which takes an argument x, our function takes none. It is possible to declare functions that also take one or more arguments, but this will be discussed in a future tutorial. Since in our case we have none, we use an empty () after the function's name.
+As you will probably have guessed, main is the name of the function. This means, that if we want to access it from somewhere else in the program, we have to write the instruction main() (which means execute main and pass no parameter).
+main also is a special function in C++. It is the entry point of the program. After you compile your program and run it, this is where it will start.
+The { marks the beginning of the function's code. In later tutorials we will see that it marks the beginning of other structures as well. Together with the } it forms what is called a block. It tells us that a sequence of instructions belong together, in this case the enclosed instructions make up the function. This concept should become clearer in subsequent tutorials.
+
+cout << "Hello world!" << endl;
+
+As mentioned before, cout is the special stream that writes to the console. A stream is just a continuous sequence of characters. It works much like a video stream on the internet. cout is an output stream, so we can only write to it. This is done with the << operator. We write the string "Hello world!" to it. Strings are put between "", otherwise the compiler would try to interpret it as an identifier. Since neither Hello nor world! have been declared as identifiers, this would lead to an error. endl is special identifier that generates a new line (as if you had pressed the enter key). As you can see, you can chain several inputs into the stream.
+
+return 0;
+
+This is the value of our function. In the sin(x) example, it would depend on the value of x, but here we return the constant 0. Since this is the main function, its return value indicates if there has been an error in the execution. 0 means 'no error'.
+
+Finally, we have the closing }, that was already mentioned earlier. Now you might ask, why is there no ;, if this ends a line? Since the { and } are themselves begin and end markings, it is not necessary to use ; to end a line. There is no risk of ambiguity. As you may have noticed, the #include does not have a ; either. This is because of the way preprocessor declarations are defined. Contrary to instructions, they end with a line break.
+
+So, now that we understand our program, let's run it. C++ is a compiled language, which means it has to be translated to a machine readable code first and can then be run. If you are using an IDE, then you will probably have a run button somewhere. If you click on it, the program will compile and then run. Since there are too many IDEs, it is difficult to explain them one by one, so I will use a more universal tool: GNU's C++ compiler g++. (Should you have trouble with a particular IDE, please post it in the comments and I will try to help).
+
+If you are on a Unix based system (like Linux) you already have it. For Windows users, we will use MinGW. So head to http://mingw.org/, then download and install it. Now we need to open a console/shell. In Unix based systems just open the shell that comes with your distribution. In Windows you can use the Windows console (cmd.exe) or the one that comes with MinGW. If you're using cmd.exe, make sure to open it after the MinGW installation, otherwise the PATH will not have the g++ directory yet. The MinGW shell has a Linux look, but it can also execute DOS commands.
+Go to the directory where you stored your file and type g++ -o hello_world hello_world.cpp. This will compile the code and generate an executable called hello_world (that's what the -o option is for). In Windows, this means you have an hello_world.exe. Now execute your new executable (type ./hello_world or hello_world.exe depending on your system).
+
+And that's it! See you for the next tutorial.

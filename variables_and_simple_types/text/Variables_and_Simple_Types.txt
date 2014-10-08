@@ -1,0 +1,165 @@
+Part 2: Variables and Simple Types
+
+-----------------------------
+
+Introduction to variables, simple numerical types and comments.
+
+----------------------------
+
+Hello and welcome to part 2 of the tutorial series on C++. In this part we are going to talk about simple numerical types and variables and I am also going to introduce comments.
+
+Variables can be seen as boxes into which you can put a value and later use it whenever you need it. You can also put in a new value any time you want. In order to distinguish one variable from another, you assign it a name.
+
+Each variable needs to have a type. The type tells us what kind of values can go into a variable. For numerical types this means if they are integer or decimal, if they are signed or unsigned and which is the maximum value allowed.
+
+In more technical terms, declaring a variable (i.e. giving it a name and type) will assign a space in memory for this variable. How much space is assigned depends on the type. This is because of the differences from one type to another explained in the previous paragraph. A type with a higher maximum value will need more space than one with a lower maximum value (just like you need more 0s to write 1.000.000 than 1.000).
+
+The list presented here is not exhaustive. This is done on purpose to keep the focus on the most important types. The principles explained here apply to all types as well. There are many resources in literature and on the internet, that give a complete list of available types and their properties (just enter 'C++ type reference' or 'C++ types' into a search engine).
+
+Another concept introduced in this tutorial are comments. Although the computer completely ignores them, they are essential for humans. Comments allow you to describe in free text what a specific part of your program does. This is very important if other people need to understand your code. And even yourself, when looking at your own code from some time ago will have a hard time understanding what it does if it is not properly commented. You should start commenting your programs from day one. Making it a habit will help you a lot in your programming career.
+
+There are two kinds of comments, single line and multi line. Single line comments start with a // and go until the end of the line. Everything after the // will be considered a comment and ignored by the compiler.
+Multi line comments start with a /* and end with a */. Everything between the two will be ignored. This is useful for commenting long blocks of text without having to put a // before every line. Also note that a multi line comment can start and end in the same line.
+
+OK, so let's get started with our code. Paste the following code into a new file, e.g. variables.cpp. I will only explain the new parts, so if there is something you don't understand, please read part 1 of the series.
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	
+	/* This is a
+	   multiline comment */
+	/* This too */
+	
+	// integers
+	int i1;
+	i1 = 2;
+	int i2 = 1;
+	int i3 = i1 + i2;
+	cout << "Integers: " << i1 << " + " << i2 << " = " << i3 << endl;
+	
+	// floats
+	float f1, f2;
+	f1 = 3.0f;
+	f2 = 1.0f;
+	float f3 = f1 - f2;
+	cout << "Floats: " << f1 << " - " << f2 << " = " << f3 << endl;
+	
+	// doubles
+	double d1 = 2.0d;
+	double d2 = 1.0d;
+	double d3 = d1 * d2;
+	cout << "Doubles: " << d1 << " * " << d2 << " = " << d3 << endl;
+	
+	// chars
+	char c1 = 'D';
+	char c2 = 'A';
+	char c3 = c1 - c2;
+	cout << "Chars: " << c1 << " - " << c2 << " = " << c3 << endl;
+	
+	// long
+	long l1 = -100000000;
+	long l2 = -50000000;
+	long l3 = l1 / l2;
+	cout << "Longs: " << l1 << " / " << l2 << " = " << l3 << endl;
+	
+	// unsigned
+	unsigned int u1 = 1;
+	unsigned int u2 = 10;
+	unsigned int u3 = u1 - u2;
+	cout << "Unsigneds: " << u1 << " - " << u2 << " = " << u3 << endl;
+	
+	// bool
+	bool b1 = u1 < u2;
+	bool b2 = u1 > u2; 
+	bool b3 = true;
+	bool b4 = false;
+	bool b5 = -31;
+	cout << "Booleans: " << u1 << " < " << u2 << " = " << b1 << endl;
+	cout << "Booleans: " << u1 << " > " << u2 << " = " << b2 << endl;
+	cout << "Booleans: true = " << b3 << endl;
+	cout << "Booleans: false = " << b4 << endl;
+	cout << "Booleans: -31 = " << b5 << endl;
+
+	// mixed operations
+	int m1 = f1 / i1;
+	float m2 = f1 / i1;
+	cout << "Mixed int: " << f1 << " / " << i1 << " = " << m1 << endl;
+	cout << "Mixed float: " << f1 << " / " << i1 << " = " << m2 << endl;
+		
+	return 0;
+}
+
+
+Now, let us go into the details: 
+
+/* This is a
+   multiline comment */
+/* This too */
+As explained above, these are the multi line comments. The compiler ignores them, so you can put in anything that you like and helps you and others understand your program.
+
+
+// integers
+Here we have a single line comment. No ending characters are needed, because it automatically ends at the end of the line.
+
+
+int i1;
+i1 = 2;
+int i2 = 1;
+int i3 = i1 + i2;
+Here we get to the core of this tutorial. We are declaring three variables i1, i2 and i3. A variable declaration has the format <type> <name>. Let's look at the case of int i1. We are telling the compiler that we want a variable of type integer. C++ uses the abbreviation int for this type, integer itself is not a valid type. We are also telling it that we want it to have the name i1. Variable names can contain letters, digits and underscores (_). However, they cannot start with a digit. C++ is also case sensitive, so a variable var is not the same as a variable Var. This also applies to everything else. To define an integer you have to use int, Int would not be recognized by the compiler. In general, this means that a is not the same as A.
+
+
+Now let's have a look a the next line. Here we are assigning our variable i1 a value of 2. This means that if we now access i1, it will give us the value 2.
+
+In the third line we are declaring the integer variable i2. We are also assigning it a value of 1. This is a shorthand form of the first two lines.
+
+Finally, we declare variable i3 and assign it the value of the sum of i1 and i2. This translates to assigning it the the sum of 2 and 1. The difference between using variables or the values 2 and 1 directly is that if we change the value of either i1 or i2, the value of i3 will also change.
+
+Having a variable on the left hand side of an = means that we are assigning a value to it (an assignment), while in order to read it, it can be either on the right hand side of the = or there is no = at all. We access it by just writing its name.
+
+cout << "Integers: " << i1 << " + " << i2 << " = " << i3 << endl;
+In this line we print the values of our variables.
+
+
+float f1, f2;
+f1 = 3.0f;
+As we can see in the first line, we can declare variables of the same type on the same line. In order to do so, separate their names by commas. Float is short for floating point and represents a decimal number.
+
+
+We are assigning 3.0f to f1. The f after the decimal indicates that this number is a floating point number. While just assigning 3 or 3.0 would have worked, this form is the most correct one.
+
+double d1 = 2.0d;
+Double is a double precision decimal, so it can store larger values and has more accuracy than a floating point. This comes at the cost of higher memory consumption. The d in 2.0d indicates that this a double.
+
+
+char c1 = 'D';
+char represent characters and are 1 byte. Characters are actually numbers, from 0 to 255, which encode ASCII characters. This is why we can operate on them with arithmetical operations. When displaying them, however, the ASCII character corresponding to the code will be displayed. Search for 'ASCII table' on the internet to get the list of codes.
+
+long l1 = -100000000;
+longs are long integers. These days they are usually the same as int, but before the 32-bit age, they were larger than ints.
+
+
+unsigned int u1 = 1;
+Prefixing an integer with unsigned means that it can only store positive values. This gives it twice the maximum value while not using any more memory. As you can see in the example, negative values wrap around. This means, that the expected result of -9 turns into maximum value - 8. Actually, this wrapping will occur with all numbers and is called overflow. We will always go from the maximum value to the minimum value and vice versa. An example should clarify this. Let's suppose that we have a type with maximum value = 10000 and minimum value = -10000. 10000 + 1 should give us 10001, but instead it gives us -10000, because we are out the type's range. Likewise, -10000 - 1 will result in 10000. If we look at an unsigned case: Our maximum positive value will now be 20000 and our minimum value 0 (we keep the same range). 20000 + 1 = 0 and 0 - 1 = 20000. 20000 + 2 = 1, 0 - 2 = 19999 and so on. There is also an equivalent signed keyword (so we would have signed int i1), but it is hardly ever used, since signed is the default.
+
+
+bool b1 = u1 < u2;
+bool b2 = u1 > u2; 
+bool b3 = true;
+bool b4 = false;
+bool b5 = -31;
+boolean (bool) variables can only take two values: true or false. In C++, the definition of true and false goes beyond these two keywords. 0 is false, everything else is true. This equivalence can be seen in the way a boolean variable is displayed. It has the values 0 for false and 1 for true. As you can see, -31 is also true (= 1) in a boolean context, since it is not 0.
+
+In these lines you can see how you can assign the result of a comparison to a boolean variable. But you can also assign it true or false directly, or even a number.
+
+int m1 = f1 / i1;
+float m2 = f1 / i1;
+Finally, these lines illustrate that we can mix types in an operation, as long as one type can be converted to the other (which is the case for numerical types). In the first case, we assign the result to an int. By doing this, we loose all decimal information and keep only the integer part. In the second case, we assign the result to a float, so we keep all our information.
+
+
+In this part you have learnt how to declare variables and how to access them for reading and assigning a value. It is also possible to read a variable's value and assign a new value to it on the same line. For example, i = i + 3, will increase variable i by 3.
+
+If you haven't done so already, compile your code (g++ -o variables variables.cpp if you are using g++) and run it.

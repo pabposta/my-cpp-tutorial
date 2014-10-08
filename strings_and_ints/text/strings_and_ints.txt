@@ -1,0 +1,128 @@
+Part 4: Combining Strings with other types
+
+------------------------------------------------------------------------------------------------------------------------
+
+This tutorial shows how to concatenate strings with other types, such as integers
+
+------------------------------------------------------------------------------------------------------------------------
+
+Hello and welcome to part 4 of this C++ tutorial. In the last lesson we talked about strings and learned how to concatenate them. But what if you want to combine a string and another type, like an integer? This is the topic of this part.
+
+OK, so let's start out by creating a file with the following content:
+
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+
+stringstream stream;
+string result;
+
+string youHaveStr = "You have ";
+string unreadMessagesStr = " unread messages";
+int unreadMessages = 4;
+stream << youHaveStr << unreadMessages << unreadMessagesStr;
+result = stream.str();
+cout << result << endl;
+
+stream.str("");
+stream.clear();
+
+string profileViewsStringStr = " people have viewed your profile";
+int profileViews = 23;
+stream << profileViews << profileViewsStringStr << endl;
+result = stream.str();
+cout << result;
+
+stream.str("");
+stream.clear();
+
+string yourAccountStr = "Your account is ";
+string completionPercentStr = "% complete";
+float completionPercent = 66.666666;
+
+stream << yourAccountStr << completionPercent << completionPercentStr;
+result = stream.str();
+cout << result << endl;
+
+stream.str("");
+stream.clear();
+
+stream << yourAccountStr << roundf(completionPercent) << completionPercentStr;
+result = stream.str();
+cout << result << endl;
+
+stream.str("");
+stream.clear();
+
+stream.setf(ios::fixed, ios::floatfield);
+stream.precision(2);
+stream << yourAccountStr << completionPercent << completionPercentStr;
+cout << stream.str() << endl;
+
+stream.str("");
+stream.clear();
+
+string activeStr = "This week you have been ";
+bool active = true;
+stream << activeStr << "active? " << active;
+cout << stream.str() << endl;
+
+stream.str("");
+stream.clear();
+
+string modeStr = active ? "active" : "inactive";
+stream << activeStr << modeStr << ".";
+cout << stream.str() << endl;
+
+return 0;
+}
+
+
+And now, let's get into the details.
+
+#include <sstream>
+#include <cmath>
+There are two new includes. The first is to include our stringstream, which is the main tool used for concatenation. We are already familiar with the cout stream, which writes to the console. A stringstream works similarly, but instead of writing to the console, we can use it to write to a string.
+
+cmath is a library with some standard mathematical functions. We will use it to round a decimal.
+
+
+
+stringstream stream;
+Here we are declaring our stringstream variable.
+
+
+stream << youHaveStr << unreadMessages << unreadMessagesStr;
+Here we are feeding information to our stream, the same way we did with cout. Our stream then contains what we fed into it, so that we will be able to access it later. As you can see, it is possible to feed it strings or other types of variables, as well as endl (shown in later examples).
+
+
+result = stream.str();
+Here is where we get what we wanted: A string containing the other types. The str() method takes our stringstream and converts it into a string. 
+
+
+stream.str("");
+stream.clear();
+These two commands clear our stream. The first one assigns it an empty string, wiping its current contents. The second one clears error and eof (end of file) flags.
+
+stream << yourAccountStr << roundf(completionPercent) << completionPercentStr;
+This line introduces the roundf() function from cmath. It does as its name implies. The f at the end is to indicate we are rounding a float. The standard round() function takes and returns a double. Because C++ can automatically convert between float and double, we could have used round(completionPercent), but roundf() is more correct.
+
+
+stream.setf(ios::fixed, ios::floatfield);
+stream.precision(2);
+These lines allow us to format a decimal in a stream. What we are telling it here is to round to two decimals after the point. setf() says we want a fixed number of decimals for decimal numbers and precision() sets the number of decimals to 2. fixed and floatfield are prefixed by ios::, because they belong to the ios namespace.
+
+
+bool active = true;
+stream << activeStr << "active? " << active;
+...
+string modeStr = active ? "active" : "inactive";
+Here we see an example with a boolean variable. We can print the boolean itself, but since it is displayed as 0 or 1, this is usually not very nice. Here presented is an alternative, where we print one string or another, depending of the value of the boolean variable.
+
+
+And that's it for this lesson. See you in the next one.

@@ -1,0 +1,27 @@
+try to find useful small applications for every tutorial. the resulting program has to do something.
+some things, like random numbers, can either be thrown in to other tutorials or precede another one that uses them as a short preceding tutorial
+chain tutorials to create a 'big' program in the end, i.e. build one tutorial on the previous one
+
+variables and simple types
+operators: simple and complex
+control structures -> draw xmas tree or something for 'for' loop. maybe dedicate one tutorial for each type of control structure. -> for, while, if, case
+arrays
+strings
+functions
+read from console (cin)
+pointers
+complex types (enum, ...)
+variable scope
+structs
+classes
+templates
+inheritance
+read command line args
+random numbers
+
+preprocessor arguments
+design patterns (separate tutorial series for this)
+data structures (might also be a separate series)
+algorithms (separate series)
+
+revive my stock game for while loop

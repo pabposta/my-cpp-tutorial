@@ -1,0 +1,84 @@
+Hello and welcome to part 3 of the tutorial. Today we are going to talk about strings. Strings are very important, because they allow us to manipulate and display text. We have already met with them in the previous parts. Everything between "" are strings. But they are constant, meaning they cannot altered. We are now going to learn about variable strings.
+
+Create a file called strings.cpp and copy the following into it:
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+	string s = "Hello World";
+	
+	cout << s << endl;
+	cout << "Length of string: " << s.length() << endl;
+	
+	cout << "Hello World = " << s << " ? " << s.compare("Hello World") << endl;
+	cout << "A = " << s << " ? " << s.compare("A") << endl;
+	cout << "Z = " << s << " ? " << s.compare("Z") << endl;
+	cout << "Hello " << s.substr(6, 5) << endl;
+	
+	string s2 = s + "!";
+	cout << s2 << endl;
+	
+	cout << s[0] << s[1] << s[2] << s[3] << s[4] << endl;
+	
+	s.insert(5, ",");
+	cout << s << endl;
+	
+	string s3(s);
+	cout << s3 << endl;
+	
+	cout << s.find("World") << endl;
+	
+	s.clear();
+	cout << "Cleared string: " << s << endl;
+}
+
+#include <string>
+
+Here we are including the library that provides the support for strings.
+
+string s = "Hello World";
+
+Here we can see the type of our string variables, which is of course string. We can also see how we are assigning a constant string to our variable string.
+
+cout << "Length of string: " << s.length() << endl;
+
+In order to get the length of a string, we can use the string's length() method. We are going to learn the details about methods when we get to classes and objects. For now, a method is a function that acts on the variable that precedes it. In our case, it acts on the string s. To invoke a method, you use the operator '.' , as can be seen here.
+
+cout << "Hello World = " << s << " ? " << s.compare("Hello World") << endl;
+cout << "A = " << s << " ? " << s.compare("A") << endl;
+cout << "Z = " << s << " ? " << s.compare("Z") << endl;
+
+The compare() method compares two strings alphabetically. It compares the string it acts on (in this case s) with the string you pass as parameter. If the strings are the same, the result is 0. If s comes first in the alphabet, the result is -1 and if the comparing string comes first, then the result is 1. In this example we are comparing to constant strings, but you can also use a variable string as the parameter, e.g. s.compare(s2);
+
+cout << "Hello " << s.substr(6, 5) << endl;
+
+The substr() method returns a part of the string it is invoked upon. The first parameter is at which index to start. Have in mind that the first position has index 0, not 1. Index 6 puts us at 'W'. The second parameter is the number of characters that we want to select. 5 makes us select 'World';
+
+string s2 = s + "!";
+
+The + operator allows us to join strings. Here we are appending the string "!" to s and saving it in s2.
+
+cout << s[0] << s[1] << s[2] << s[3] << s[4] << endl;
+
+This line shows us how to access a string character by character, using the [] operator. Remember that the first character has index 0.
+
+s.insert(5, ",");
+
+Here we see how to insert a string into another string. We are inserting the string "," at index 5 of s.
+
+string s3(s);
+
+This command creates a string with the value of another string. It is equivalent to string s3 = s;. We could also use a constant string as initialization value.
+
+cout << s.find("World") << endl;
+
+This method searches the string it acts upon for the parameter string. If it finds it, it returns the index at which it found it, otherwise it returns -1. Please note that 7 is the correct value, even if 'World' started at 6 in the substr() example. This is because of the ',' we inserted afterwards. Also, if you make a test to see what happens if you try to find a non-existent string, like "X", you might get a very big number instead of -1. This is actually -1, but being interpreted as an unsigned number. If you recall the last tutorial, an unsigned number will overflow and interpret negative numbers as MaxNumber - absolute value of the negative number.
+
+s.clear();
+
+This clears the string. As you can see, when trying to display it afterwards, it is now empty.
+
+And that is all for today. If you haven't done so already, compile and run the example. In the next part we will learn how to combine strings with other variable types, like integers and decimals.
